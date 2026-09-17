@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sandbox: Job Application Form - TechCorp Global</title>
+  <link rel="stylesheet" href="test-form.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="company-header">
+      <div class="company-badge">TechCorp Global Careers</div>
+      <h1>Senior Full Stack Software Engineer</h1>
+      <div class="job-meta">
+        <span>📍 San Francisco, CA (Remote / Hybrid)</span>
+        <span>💼 Engineering</span>
+        <span>🕒 Full-time</span>
+      </div>
+    </header>
+
+    <div class="test-banner">
+      <div class="banner-icon">⚡</div>
+      <div class="banner-text">
+        <strong>Extension Test Playground:</strong> Use the extension floating button at the bottom-right or press <code>Alt + Shift + F</code> to autofill this entire application instantly!
+      </div>
+    </div>
+
+    <!-- Application Form -->
+    <form id="jobApplicationForm" class="application-form" onsubmit="event.preventDefault(); handleSubmit();">
+      
+      <!-- Section 1: Basic Information -->
+      <section class="form-section">
+        <h2 class="section-title">1. Personal Information</h2>
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="first_name">First Name <span class="required">*</span></label>
+            <input type="text" id="first_name" name="first_name" placeholder="First Name" required autocomplete="given-name">
+          </div>
+          <div class="field-group">
+            <label for="last_name">Last Name <span class="required">*</span></label>
+            <input type="text" id="last_name" name="last_name" placeholder="Last Name" required autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <div class="field-group">
+            <label for="phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="country_code">Country Dial Code</label>
+            <input type="text" id="country_code" name="country_code" placeholder="+1">
+          </div>
+          <div class="field-group">
+            <label for="pronouns">Preferred Pronouns</label>
+            <input type="text" id="pronouns" name="pronouns" placeholder="e.g. They/Them, She/Her, He/Him">
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Online Profiles & Links -->
+      <section class="form-section">
+        <h2 class="section-title">2. Online Profiles & Portfolio</h2>
+        <div class="field-group">
+          <label for="linkedin_profile">LinkedIn Profile URL</label>
+          <input type="url" id="linkedin_profile" name="linkedin" placeholder="https://linkedin.com/in/username">
+        </div>
+
+        <div class="field-group">
+          <label for="github_url">GitHub Profile URL</label>
+          <input type="url" id="github_url" name="github" placeholder="https://github.com/username">
+        </div>
+
+        <div class="field-group">
+          <label for="portfolio_website">Portfolio / Personal Website</label>
+          <input type="url" id="portfolio_website" name="portfolio" placeholder="https://yourportfolio.dev">
+        </div>
+
+        <div class="field-group">
+          <label for="twitter_url">Twitter / X URL</label>
+          <input type="url" id="twitter_url" name="twitter" placeholder="https://x.com/username">
+        </div>
+      </section>
+
+      <!-- Section 3: Address & Location -->
+      <section class="form-section">
+        <h2 class="section-title">3. Address & Location</h2>
+        <div class="field-group">
+          <label for="street_address">Street Address</label>
+          <input type="text" id="street_address" name="address_line1" placeholder="Street address or P.O. Box" autocomplete="address-line1">
+        </div>
+
+        <div class="field-group">
+          <label for="apartment_unit">Apartment / Suite / Unit</label>
+          <input type="text" id="apartment_unit" name="address_line2" placeholder="Apt, Suite, Bldg (optional)" autocomplete="address-line2">
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="city_name">City</label>
+            <input type="text" id="city_name" name="city" placeholder="City" autocomplete="address-level2">
+          </div>
+          <div class="field-group">
+            <label for="state_name">State / Province</label>
+            <input type="text" id="state_name" name="state" placeholder="State" autocomplete="address-level1">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="zip_code">Postal / ZIP Code</label>
+            <input type="text" id="zip_code" name="postal_code" placeholder="ZIP or Postal Code" autocomplete="postal-code">
+          </div>
+          <div class="field-group">
+            <label for="country_name">Country</label>
+            <input type="text" id="country_name" name="country" placeholder="Country" autocomplete="country-name">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="relocate_choice">Are you willing to relocate for this role?</label>
+          <select id="relocate_choice" name="relocate">
+            <option value="">-- Select an option --</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Negotiable">Negotiable</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Section 4: Work Experience & Salary -->
+      <section class="form-section">
+        <h2 class="section-title">4. Experience & Compensation</h2>
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="current_job_title">Current Job Title</label>
+            <input type="text" id="current_job_title" name="current_title" placeholder="e.g. Senior Software Engineer">
+          </div>
+          <div class="field-group">
+            <label for="current_company_name">Current Employer / Company</label>
+            <input type="text" id="current_company_name" name="current_company" placeholder="e.g. Acme Corp">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="total_years_exp">Total Years of Experience</label>
+            <input type="text" id="total_years_exp" name="experience_years" placeholder="e.g. 4">
+          </div>
+          <div class="field-group">
+            <label for="notice_period">Notice Period (in days)</label>
+            <input type="text" id="notice_period" name="notice_period" placeholder="e.g. 15 or 30">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="current_salary">Current CTC / Salary</label>
+            <input type="text" id="current_salary" name="current_ctc" placeholder="e.g. $120,000">
+          </div>
+          <div class="field-group">
+            <label for="expected_salary">Expected CTC / Salary</label>
+            <input type="text" id="expected_salary" name="expected_ctc" placeholder="e.g. $140,000">
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Education -->
+      <section class="form-section">
+        <h2 class="section-title">5. Education Details</h2>
+        <div class="grid-2">
+          <div class="field-group">
+            <label for="degree_level_select">Degree Level</label>
+            <select id="degree_level_select" name="degree_level">
+              <option value="">-- Select Degree --</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="Doctorate / PhD">Doctorate / PhD</option>
+              <option value="Associate Degree">Associate Degree</option>
+              <option value="High School">High School</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="degree_major_input">Major / Field of Study</label>
+            <input type="text" id="degree_major_input" name="degree_major" placeholder="e.g. Computer Science">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="university_name">College / University</label>
+          <input type="text" id="university_name" name="university" placeholder="e.g. University of California, Berkeley">
+        </div>
+
+        <div class="grid-3">
+          <div class="field-group">
+            <label for="start_year_input">Start Year</label>
+            <input type="text" id="start_year_input" name="start_year" placeholder="e.g. 2018">
+          </div>
+          <div class="field-group">
+            <label for="graduation_year_input">Graduation Year</label>
+            <input type="text" id="graduation_year_input" name="graduation_year" placeholder="e.g. 2022">
+          </div>
+          <div class="field-group">
+            <label for="gpa_input">GPA / CGPA</label>
+            <input type="text" id="gpa_input" name="gpa" placeholder="e.g. 3.85">
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Legal & EEO Questions -->
+      <section class="form-section">
+        <h2 class="section-title">6. Work Authorization & EEO</h2>
+        
+        <div class="field-group">
+          <label class="group-label">Are you legally authorized to work in the United States?</label>
+          <div class="radio-row">
+            <label class="radio-label">
+              <input type="radio" name="authorized_work" value="Yes" id="auth_yes">
+              <span>Yes</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="authorized_work" value="No" id="auth_no">
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="group-label">Will you now or in the future require visa sponsorship for employment?</label>
+          <div class="radio-row">
+            <label class="radio-label">
+              <input type="radio" name="require_sponsorship" value="Yes" id="sponsor_yes">
+              <span>Yes</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="require_sponsorship" value="No" id="sponsor_no">
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="veteran_status_select">Veteran Status</label>
+          <select id="veteran_status_select" name="veteran_status">
+            <option value="">-- Select Veteran Status --</option>
+            <option value="I am not a protected veteran">I am not a protected veteran</option>
+            <option value="I identify as one or more of the classifications of a protected veteran">I identify as a protected veteran</option>
+            <option value="I decline to identify">I decline to self-identify</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="disability_status_select">Disability Status</label>
+          <select id="disability_status_select" name="disability_status">
+            <option value="">-- Select Disability Status --</option>
+            <option value="No, I do not have a disability">No, I do not have a disability</option>
+            <option value="Yes, I have a disability">Yes, I have a disability</option>
+            <option value="I decline to self-identify">I decline to self-identify</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="race_ethnicity_select">Race / Ethnicity</label>
+          <select id="race_ethnicity_select" name="race_ethnicity">
+            <option value="">-- Select Race/Ethnicity --</option>
+            <option value="Asian">Asian (Not Hispanic or Latino)</option>
+            <option value="White">White (Not Hispanic or Latino)</option>
+            <option value="Black or African American">Black or African American</option>
+            <option value="Hispanic or Latino">Hispanic or Latino</option>
+            <option value="Two or More Races">Two or More Races</option>
+            <option value="I decline to self-identify">Decline to self-identify</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Section 7: Additional Questions -->
+      <section class="form-section">
+        <h2 class="section-title">7. Summary & Cover Letter</h2>
+        <div class="field-group">
+          <label for="summary_input">Professional Summary / Bio</label>
+          <textarea id="summary_input" name="summary" rows="3" placeholder="Tell us a little bit about yourself..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label for="cover_letter_input">Cover Letter</label>
+          <textarea id="cover_letter_input" name="cover_letter" rows="5" placeholder="Paste your cover letter or statement of interest..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label for="why_join_input">Why do you want to join TechCorp Global?</label>
+          <textarea id="why_join_input" name="why_join" rows="3" placeholder="What excites you about this opportunity?"></textarea>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="reset" class="btn-reset">Clear Form</button>
+        <button type="submit" class="btn-submit">Submit Application</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    function handleSubmit() {
+      alert('Application submitted successfully! All fields were verified.');
+    }
+  </script>
+</body>
+</html>

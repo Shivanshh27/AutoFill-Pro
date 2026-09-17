@@ -1,0 +1,217 @@
+/* Floating In-Page Widget Shadow DOM Styles */
+
+:host {
+  all: initial;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  pointer-events: auto;
+}
+
+.af-widget-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  user-select: none;
+}
+
+/* Floating Action Button */
+.af-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.5), 0 8px 10px -6px rgba(79, 70, 229, 0.3);
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.af-pill-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.65), 0 10px 15px -5px rgba(79, 70, 229, 0.4);
+}
+
+.af-pill-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.af-pill-icon {
+  font-size: 16px;
+  animation: af-pulse 2s infinite ease-in-out;
+}
+
+.af-pill-badge {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Mini Menu Trigger */
+.af-menu-toggle {
+  background: rgba(15, 23, 42, 0.85);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.af-menu-toggle:hover {
+  color: #ffffff;
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Drawer Popout */
+.af-drawer {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  width: 310px;
+  padding: 16px;
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.6), 0 10px 15px -5px rgba(0, 0, 0, 0.4);
+  color: #e2e8f0;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  animation: af-fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.af-drawer.open {
+  display: flex;
+}
+
+.af-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+}
+
+.af-drawer-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.af-profile-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.15);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.af-drawer-close {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.af-drawer-close:hover {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.af-quick-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.af-quick-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.af-quick-item:hover {
+  background: rgba(51, 65, 85, 0.8);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: #ffffff;
+}
+
+.af-item-label {
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.af-item-val {
+  font-family: monospace;
+  font-size: 11px;
+  color: #cbd5e1;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.af-toast {
+  position: fixed;
+  bottom: 85px;
+  right: 24px;
+  background: #10b981;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.35);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  animation: af-slideUp 0.3s ease-out;
+  z-index: 2147483647;
+}
+
+@keyframes af-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+@keyframes af-fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes af-slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

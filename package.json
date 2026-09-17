@@ -1,0 +1,13 @@
+{
+  "name": "autofill-pro-chrome-extension",
+  "version": "1.0.0",
+  "description": "Smart Manifest V3 Chrome Extension for autofilling job applications and Google Forms",
+  "scripts": {
+    "sync": "node sync-env.js",
+    "icons": "node generate_icons.js",
+    "check": "node -c config.js sync-env.js background/service-worker.js content/matcher.js content/content.js popup/popup.js options/options.js"
+  },
+  "keywords": ["autofill", "chrome-extension", "manifest-v3", "google-forms"],
+  "author": "Shivansh Nigam",
+  "license": "MIT"
+}

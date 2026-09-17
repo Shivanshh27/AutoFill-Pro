@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoFill Pro - Settings & Profile Manager</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <div class="brand-text">
+          <h2>AutoFill Pro</h2>
+          <span>Profile Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Profile Selector & Actions -->
+      <div class="sidebar-profiles">
+        <div class="sidebar-section-title">Profiles</div>
+        <ul class="profile-list" id="profileList">
+          <!-- Injected dynamically -->
+        </ul>
+        <button id="newProfileBtn" class="btn-secondary add-profile-btn">
+          <span>+ Create New Profile</span>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-title">Sections</div>
+        <button class="nav-item active" data-tab="tab-personal">👤 Personal Info</button>
+        <button class="nav-item" data-tab="tab-social">🌐 Social & Links</button>
+        <button class="nav-item" data-tab="tab-address">📍 Address & Location</button>
+        <button class="nav-item" data-tab="tab-experience">💼 Work & Salary</button>
+        <button class="nav-item" data-tab="tab-education">🎓 Education</button>
+        <button class="nav-item" data-tab="tab-legal">⚖️ Work Auth & EEO</button>
+        <button class="nav-item" data-tab="tab-vault">📝 Answers Vault</button>
+        <button class="nav-item" data-tab="tab-custom">🏷️ Custom Fields</button>
+        <button class="nav-item" data-tab="tab-backup">💾 Backup & Tools</button>
+      </nav>
+
+      <!-- Test Playground CTA -->
+      <div class="test-sandbox-card">
+        <div class="sandbox-title">🧪 Form Playground</div>
+        <p>Test your autofill on a realistic job application form.</p>
+        <a href="../test-page/test-form.html" target="_blank" class="sandbox-link">Open Test Form ↗</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Action Bar -->
+      <header class="top-bar">
+        <div class="profile-info-header">
+          <input type="text" id="profileNameInput" class="profile-name-input" placeholder="Profile Name" value="Software Engineer">
+          <span class="active-badge" id="activeProfileBadge">Active Profile</span>
+        </div>
+        <div class="top-actions">
+          <button id="setActiveBtn" class="btn-outline">Set as Active</button>
+          <button id="duplicateProfileBtn" class="btn-outline">Duplicate</button>
+          <button id="deleteProfileBtn" class="btn-danger">Delete</button>
+          <button id="saveProfileBtn" class="btn-primary">
+            <span>💾 Save Profile</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Alert Notification -->
+      <div id="toastNotification" class="toast-notification"></div>
+
+      <!-- Tab Content Panels -->
+      <div class="tab-panels">
+        
+        <!-- Tab 1: Personal Info -->
+        <section id="tab-personal" class="tab-panel active">
+          <div class="panel-header">
+            <h3>👤 Personal Information</h3>
+            <p>Basic candidate identification and contact details.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" placeholder="e.g. Alex">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" placeholder="e.g. Morgan">
+            </div>
+            <div class="form-group span-2">
+              <label for="fullName">Full Name (As per Aadhaar / Official)</label>
+              <input type="text" id="fullName" placeholder="e.g. Alex Morgan">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="e.g. alex.morgan@example.com">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="e.g. +91 9876543210">
+            </div>
+            <div class="form-group">
+              <label for="phoneCountryCode">Phone Dial Code</label>
+              <input type="text" id="phoneCountryCode" placeholder="e.g. +91 or +1">
+            </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth (DOB)</label>
+              <input type="text" id="dob" placeholder="e.g. 2001-05-15 or 15/05/2001">
+            </div>
+            <div class="form-group">
+              <label for="preferredPronouns">Preferred Pronouns</label>
+              <input type="text" id="preferredPronouns" placeholder="e.g. They/Them, She/Her, He/Him">
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender Identity</label>
+              <select id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 2: Social & Links -->
+        <section id="tab-social" class="tab-panel">
+          <div class="panel-header">
+            <h3>🌐 Online Profiles & Portfolio</h3>
+            <p>Professional links, repositories, and portfolio websites.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label for="linkedin">LinkedIn Profile URL</label>
+              <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+            </div>
+            <div class="form-group span-2">
+              <label for="github">GitHub Profile URL</label>
+              <input type="url" id="github" placeholder="https://github.com/username">
+            </div>
+            <div class="form-group span-2">
+              <label for="portfolio">Portfolio / Personal Website</label>
+              <input type="url" id="portfolio" placeholder="https://yourportfolio.dev">
+            </div>
+            <div class="form-group span-2">
+              <label for="twitter">Twitter / X Profile URL</label>
+              <input type="url" id="twitter" placeholder="https://x.com/username">
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 3: Address & Location -->
+        <section id="tab-address" class="tab-panel">
+          <div class="panel-header">
+            <h3>📍 Address & Location</h3>
+            <p>Residential address and relocation preferences.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label for="addressLine1">Address Line 1 (Street)</label>
+              <input type="text" id="addressLine1" placeholder="e.g. 742 Evergreen Terrace">
+            </div>
+            <div class="form-group span-2">
+              <label for="addressLine2">Address Line 2 (Apartment, Suite, Unit)</label>
+              <input type="text" id="addressLine2" placeholder="e.g. Apt 4B">
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" placeholder="e.g. Mumbai / San Francisco">
+            </div>
+            <div class="form-group">
+              <label for="state">State / Province / Region</label>
+              <input type="text" id="state" placeholder="e.g. Maharashtra / California">
+            </div>
+            <div class="form-group">
+              <label for="postalCode">Postal / ZIP Code</label>
+              <input type="text" id="postalCode" placeholder="e.g. 400001 / 94107">
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" placeholder="e.g. India / United States">
+            </div>
+            <div class="form-group">
+              <label for="relocate">Willing to Relocate / Location Preference</label>
+              <select id="relocate">
+                <option value="Yes">Yes / PAN India</option>
+                <option value="No">No</option>
+                <option value="Negotiable">Negotiable</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 4: Work & Salary -->
+        <section id="tab-experience" class="tab-panel">
+          <div class="panel-header">
+            <h3>💼 Work Experience & Compensation</h3>
+            <p>Current role, experience, notice period, and salary requirements.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="currentTitle">Current Job Title</label>
+              <input type="text" id="currentTitle" placeholder="e.g. Software Engineer / Student">
+            </div>
+            <div class="form-group">
+              <label for="currentCompany">Current Employer / Company</label>
+              <input type="text" id="currentCompany" placeholder="e.g. Tech Innovations Inc.">
+            </div>
+            <div class="form-group">
+              <label for="totalYearsExp">Total Experience (Years)</label>
+              <input type="text" id="totalYearsExp" placeholder="e.g. 0 or 4">
+            </div>
+            <div class="form-group">
+              <label for="noticePeriodDays">Notice Period (Days)</label>
+              <input type="text" id="noticePeriodDays" placeholder="e.g. Immediate / 15 days">
+            </div>
+            <div class="form-group">
+              <label for="currentCTC">Current Salary / CTC</label>
+              <input type="text" id="currentCTC" placeholder="e.g. $125,000 or ₹14 LPA">
+            </div>
+            <div class="form-group">
+              <label for="expectedCTC">Expected Salary / CTC</label>
+              <input type="text" id="expectedCTC" placeholder="e.g. $145,000 or ₹18 LPA">
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 5: Education -->
+        <section id="tab-education" class="tab-panel">
+          <div class="panel-header">
+            <h3>🎓 Education & Academic Details</h3>
+            <p>Degree, branch/specialization, college, graduation year, and marks.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="degreeLevel">Degree Level / Course</label>
+              <select id="degreeLevel">
+                <option value="B.Tech">B.Tech / B.E.</option>
+                <option value="Bachelor's Degree">Bachelor's Degree</option>
+                <option value="Master's Degree">Master's Degree (M.Tech / MS / MBA)</option>
+                <option value="Doctorate / PhD">Doctorate / PhD</option>
+                <option value="Diploma">Diploma</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="degreeMajor">Specialization / Branch</label>
+              <input type="text" id="degreeMajor" placeholder="e.g. CSE or Computer Science & Engineering">
+            </div>
+            <div class="form-group span-2">
+              <label for="schoolName">College / University Name</label>
+              <input type="text" id="schoolName" placeholder="e.g. National Institute of Technology / UC Berkeley">
+            </div>
+            <div class="form-group">
+              <label for="rollNo">Roll Number / Registration No / USN</label>
+              <input type="text" id="rollNo" placeholder="e.g. 2022CS0142">
+            </div>
+            <div class="form-group">
+              <label for="gpa">Graduation CGPA / Percentage</label>
+              <input type="text" id="gpa" placeholder="e.g. 8.8 CGPA or 85%">
+            </div>
+            <div class="form-group">
+              <label for="tenthPercentage">10th (SSC) Percentage / Marks</label>
+              <input type="text" id="tenthPercentage" placeholder="e.g. 92%">
+            </div>
+            <div class="form-group">
+              <label for="twelfthPercentage">12th (HSC) / Diploma Percentage</label>
+              <input type="text" id="twelfthPercentage" placeholder="e.g. 89%">
+            </div>
+            <div class="form-group">
+              <label for="backlogs">Active Backlogs / Arrears</label>
+              <input type="text" id="backlogs" placeholder="e.g. 0 or No">
+            </div>
+            <div class="form-group">
+              <label for="graduationYear">Graduation Year</label>
+              <input type="text" id="graduationYear" placeholder="e.g. 2026 or 2024">
+            </div>
+            <div class="form-group">
+              <label for="startYear">Start Year</label>
+              <input type="text" id="startYear" placeholder="e.g. 2022 or 2020">
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 6: Work Auth & EEO -->
+        <section id="tab-legal" class="tab-panel">
+          <div class="panel-header">
+            <h3>⚖️ Work Authorization & Equal Employment Opportunity (EEO)</h3>
+            <p>Legal authorization, visa sponsorship, veteran and disability disclosures.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="authorizedInCountry">Legally authorized to work in target country?</label>
+              <select id="authorizedInCountry">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="requireVisaSponsorship">Will you require visa sponsorship?</label>
+              <select id="requireVisaSponsorship">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <div class="form-group span-2">
+              <label for="usVeteranStatus">Veteran Status</label>
+              <select id="usVeteranStatus">
+                <option value="I am not a protected veteran">I am not a protected veteran</option>
+                <option value="I identify as one or more of the classifications of a protected veteran">I identify as a protected veteran</option>
+                <option value="I decline to identify">I decline to self-identify</option>
+              </select>
+            </div>
+            <div class="form-group span-2">
+              <label for="disabilityStatus">Disability Status</label>
+              <select id="disabilityStatus">
+                <option value="No, I do not have a disability">No, I do not have a disability</option>
+                <option value="Yes, I have a disability">Yes, I have a disability</option>
+                <option value="I decline to self-identify">I decline to self-identify</option>
+              </select>
+            </div>
+            <div class="form-group span-2">
+              <label for="raceEthnicity">Race / Ethnicity</label>
+              <select id="raceEthnicity">
+                <option value="Asian">Asian (Not Hispanic or Latino)</option>
+                <option value="White">White (Not Hispanic or Latino)</option>
+                <option value="Black or African American">Black or African American</option>
+                <option value="Hispanic or Latino">Hispanic or Latino</option>
+                <option value="Two or More Races">Two or More Races</option>
+                <option value="I decline to self-identify">Decline to self-identify</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 7: Answers Vault -->
+        <section id="tab-vault" class="tab-panel">
+          <div class="panel-header">
+            <h3>📝 Long Answers & Cover Letter Vault</h3>
+            <p>Save boilerplate answers for common job application essay questions.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label for="summary">Summary / About Yourself</label>
+              <textarea id="summary" rows="3" placeholder="Brief elevator pitch or professional bio..."></textarea>
+            </div>
+            <div class="form-group span-2">
+              <label for="coverLetter">Cover Letter Template</label>
+              <textarea id="coverLetter" rows="5" placeholder="Dear Hiring Team, I am writing to express my interest in..."></textarea>
+            </div>
+            <div class="form-group span-2">
+              <label for="whyJoin">Why do you want to work at our company?</label>
+              <textarea id="whyJoin" rows="3" placeholder="I am excited about your mission and engineering culture..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 8: Custom Fields -->
+        <section id="tab-custom" class="tab-panel">
+          <div class="panel-header">
+            <h3>🏷️ Custom Key-Value Fields</h3>
+            <p>Add custom labels and values for company-specific or unconventional form fields.</p>
+          </div>
+          <div class="custom-fields-container">
+            <div id="customFieldsList" class="custom-fields-list">
+              <!-- Dynamically populated -->
+            </div>
+            <button type="button" id="addCustomFieldBtn" class="btn-secondary">
+              <span>+ Add Custom Field</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Tab 9: Backup & Tools -->
+        <section id="tab-backup" class="tab-panel">
+          <div class="panel-header">
+            <h3>💾 Backup & Restore Profiles</h3>
+            <p>Export all your profiles to a JSON file or restore from a previous backup.</p>
+          </div>
+          <div class="backup-grid">
+            <div class="backup-card">
+              <h4>Export Backup</h4>
+              <p>Download a JSON file containing all configured profiles, vault answers, and custom fields.</p>
+              <button id="exportJsonBtn" class="btn-primary">
+                <span>📥 Export Profiles (JSON)</span>
+              </button>
+            </div>
+            <div class="backup-card">
+              <h4>Import Backup</h4>
+              <p>Restore profiles from an exported JSON backup file.</p>
+              <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+              <button id="importJsonBtn" class="btn-secondary">
+                <span>📤 Import Profiles (JSON)</span>
+              </button>
+            </div>
+            <div class="backup-card">
+              <h4>Reset to Default</h4>
+              <p>Revert all data back to the default sample profile template.</p>
+              <button id="resetDefaultsBtn" class="btn-danger">
+                <span>⚠️ Reset Defaults</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

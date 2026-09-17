@@ -527,29 +527,33 @@
 
       // 5. Deep Google Forms DOM repair & label overlap removal
       const rFrNMe = element.closest('.rFrNMe, [jscontroller], .z3vRcc, [jsname="oJeWuf"]');
-      const questionCard = element.closest('.Qr7Oae, .geS5n, [role="listitem"], [jsmodel]');
-
       if (rFrNMe) {
-        rFrNMe.classList.add('CDELRd', 'k310eb', 'F2Pmsd', 'i9A6ih');
+        rFrNMe.classList.add('CDELRd', 'k310eb', 'F2Pmsd');
         rFrNMe.classList.remove('k3FDgb', 'N0Fdjd', 'IS7Fhb');
         rFrNMe.setAttribute('aria-invalid', 'false');
-      }
 
-      // Target and hide all overlapping placeholders and validation errors
-      const searchRoot = questionCard || (rFrNMe ? rFrNMe.parentElement : element.parentElement);
-      if (searchRoot) {
-        // Hide "Your answer" labels completely
-        const placeholders = searchRoot.querySelectorAll('[jsname="V67aGc"], .AxOyFc, .snByac, .nd91id, .MocG8c, .Y2Zrqe');
-        placeholders.forEach(pl => {
-          pl.style.setProperty('display', 'none', 'important');
-          pl.style.setProperty('opacity', '0', 'important');
-          pl.style.setProperty('visibility', 'hidden', 'important');
-        });
-
-        // Hide validation error message container ("This is a required question")
-        const errorBoxes = searchRoot.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf, [role="alert"]');
+        // Hide validation error message container for this specific field
+        const errorBoxes = rFrNMe.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf, [role="alert"]');
         errorBoxes.forEach(box => {
           box.style.setProperty('display', 'none', 'important');
+        });
+      }
+
+      // Hide ONLY the specific "Your answer" placeholder of THIS input container (never touch radio/checkbox labels)
+      const inputWrapper = element.closest('.Xb9hP, .aCsPvd');
+      if (inputWrapper) {
+        const placeholders = inputWrapper.querySelectorAll('.AxOyFc, .snByac, .nd91id, [jsname="V67aGc"]');
+        placeholders.forEach(pl => {
+          // Strict safeguard: Never touch radio or checkbox option labels
+          if (pl.closest('[role="radio"], [role="checkbox"], .docssharedWizToggleLabeledContainer, [role="radiogroup"]')) {
+            return;
+          }
+          const text = (pl.innerText || pl.textContent || '').trim().toLowerCase();
+          if (text === 'your answer' || text === 'your text' || text === '') {
+            pl.style.setProperty('display', 'none', 'important');
+            pl.style.setProperty('opacity', '0', 'important');
+            pl.style.setProperty('visibility', 'hidden', 'important');
+          }
         });
       }
 

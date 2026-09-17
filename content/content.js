@@ -11,7 +11,7 @@
   let widgetHost = null;
   let isExtensionEnabled = true;
 
-  // Pulse animation style and Google Forms anti-overlap rules
+  // Pulse animation style injected to page for filled fields
   const pulseStyle = document.createElement('style');
   pulseStyle.textContent = `
     .af-field-success-pulse {
@@ -20,16 +20,11 @@
       background-color: rgba(16, 185, 129, 0.08) !important;
       transition: all 0.3s ease-in-out !important;
     }
-    /* Google Forms anti-overlap & floating label fix */
-    .rFrNMe.CDELRd .AxOyFc,
-    .rFrNMe.CDELRd .snByac,
-    .rFrNMe.CDELRd [jsname="V67aGc"],
-    .rFrNMe.CDELRd .nd91id,
-    .rFrNMe.CDELRd .MocG8c,
-    .rFrNMe.CDELRd .Y2Zrqe,
-    .Xb9hP:has(input:not([value=""])) .snByac,
-    .Xb9hP:has(input:not([value=""])) [jsname="V67aGc"],
-    .Xb9hP:has(textarea:not(:empty)) .snByac {
+    /* Google Forms text input placeholder hide (strictly scoped inside .Xb9hP, never touching radios/checkboxes) */
+    .Xb9hP:has(input:not([value=""])) > .AxOyFc.snByac,
+    .Xb9hP:has(input:not([value=""])) > [jsname="V67aGc"],
+    .Xb9hP:has(textarea:not(:empty)) > .AxOyFc.snByac,
+    .Xb9hP:has(textarea:not(:empty)) > [jsname="V67aGc"] {
       display: none !important;
       opacity: 0 !important;
       visibility: hidden !important;
@@ -166,18 +161,26 @@
 
     // Post-fill sweep to guarantee all Google Forms placeholders and required errors stay cleared
     const cleanupGoogleForms = () => {
-      document.querySelectorAll('.rFrNMe, .Qr7Oae, .geS5n, [jsmodel]').forEach(container => {
-        const hasValueInput = container.querySelector('input:not([type="hidden"]):not([value=""]), textarea:not(:empty)');
-        if (hasValueInput && hasValueInput.value) {
-          container.classList.add('CDELRd', 'k310eb', 'F2Pmsd');
-          container.classList.remove('k3FDgb', 'N0Fdjd');
-          container.querySelectorAll('[jsname="V67aGc"], .AxOyFc, .snByac, .nd91id, .MocG8c, .Y2Zrqe').forEach(pl => {
-            pl.style.setProperty('display', 'none', 'important');
-            pl.style.setProperty('opacity', '0', 'important');
-            pl.style.setProperty('visibility', 'hidden', 'important');
-          });
-          container.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf').forEach(err => {
-            err.style.setProperty('display', 'none', 'important');
+      document.querySelectorAll('.Xb9hP').forEach(inputWrapper => {
+        const input = inputWrapper.querySelector('input:not([type="hidden"]), textarea');
+        if (input && input.value) {
+          const wrapper = inputWrapper.closest('.rFrNMe');
+          if (wrapper) {
+            wrapper.classList.add('CDELRd', 'k310eb', 'F2Pmsd');
+            wrapper.classList.remove('k3FDgb', 'N0Fdjd');
+            wrapper.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf').forEach(err => {
+              err.style.setProperty('display', 'none', 'important');
+            });
+          }
+          // Hide only the specific placeholder inside this inputWrapper
+          inputWrapper.querySelectorAll('.AxOyFc, .snByac, .nd91id, [jsname="V67aGc"]').forEach(pl => {
+            if (pl.closest('[role="radio"], [role="checkbox"], .docssharedWizToggleLabeledContainer')) return;
+            const text = (pl.innerText || pl.textContent || '').trim().toLowerCase();
+            if (text === 'your answer' || text === 'your text' || text === '') {
+              pl.style.setProperty('display', 'none', 'important');
+              pl.style.setProperty('opacity', '0', 'important');
+              pl.style.setProperty('visibility', 'hidden', 'important');
+            }
           });
         }
       });

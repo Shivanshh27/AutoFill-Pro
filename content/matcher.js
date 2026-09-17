@@ -491,9 +491,22 @@
         return true;
       }
 
-      // Standard text / input / textarea
+      // 1. Focus element and simulate real user click/focus
       element.focus();
+      try {
+        element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        element.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true }));
+        element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      } catch (e) {}
 
+      // 2. Select existing text and use execCommand for native browser input pipeline
+      try {
+        if (element.select) element.select();
+        document.execCommand('selectAll', false, null);
+        document.execCommand('insertText', false, strValue);
+      } catch (e) {}
+
+      // 3. Fallback / Direct Prototype Descriptor Setter
       let prototype = HTMLInputElement.prototype;
       if (element.tagName.toLowerCase() === 'textarea') {
         prototype = HTMLTextAreaElement.prototype;
@@ -506,38 +519,61 @@
         element.value = strValue;
       }
 
-      // Google Forms specific attributes & label floating fix
+      // 4. Set direct HTML attributes
+      element.setAttribute('value', strValue);
       element.setAttribute('data-initial-value', strValue);
       element.setAttribute('badinput', 'false');
       element.setAttribute('aria-invalid', 'false');
 
-      // Update Google Forms input container styles to float label up and remove "Your answer" placeholder overlap
-      const wrapper = element.closest('.rFrNMe, .Xb9hP, .m7w29c, .Qr7Oae, [jsmodel]');
-      if (wrapper) {
-        wrapper.classList.add('CDELRd'); // Google Forms class for active floating label
-        wrapper.classList.remove('k310eb', 'N0Fdjd'); // Google Forms class for empty/error state
-        
-        // Hide overlapping placeholder
-        const placeholderLabel = wrapper.querySelector('.nd91id, .M7eMe');
-        if (placeholderLabel && placeholderLabel.innerText && placeholderLabel.innerText.trim().toLowerCase() === 'your answer') {
-          placeholderLabel.style.display = 'none';
-        }
+      // 5. Deep Google Forms DOM repair & label overlap removal
+      const rFrNMe = element.closest('.rFrNMe, [jscontroller], .z3vRcc, [jsname="oJeWuf"]');
+      const questionCard = element.closest('.Qr7Oae, .geS5n, [role="listitem"], [jsmodel]');
 
-        // Hide validation error alert
-        const errorAlert = wrapper.querySelector('[role="alert"], .RHiN0e');
-        if (errorAlert) {
-          errorAlert.style.display = 'none';
-        }
+      if (rFrNMe) {
+        rFrNMe.classList.add('CDELRd', 'k310eb', 'F2Pmsd', 'i9A6ih');
+        rFrNMe.classList.remove('k3FDgb', 'N0Fdjd', 'IS7Fhb');
+        rFrNMe.setAttribute('aria-invalid', 'false');
       }
 
-      // Dispatch realistic event sequence
-      element.dispatchEvent(new Event('focus', { bubbles: true }));
+      // Target and hide all overlapping placeholders and validation errors
+      const searchRoot = questionCard || (rFrNMe ? rFrNMe.parentElement : element.parentElement);
+      if (searchRoot) {
+        // Hide "Your answer" labels completely
+        const placeholders = searchRoot.querySelectorAll('[jsname="V67aGc"], .AxOyFc, .snByac, .nd91id, .MocG8c, .Y2Zrqe');
+        placeholders.forEach(pl => {
+          pl.style.setProperty('display', 'none', 'important');
+          pl.style.setProperty('opacity', '0', 'important');
+          pl.style.setProperty('visibility', 'hidden', 'important');
+        });
+
+        // Hide validation error message container ("This is a required question")
+        const errorBoxes = searchRoot.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf, [role="alert"]');
+        errorBoxes.forEach(box => {
+          box.style.setProperty('display', 'none', 'important');
+        });
+      }
+
+      // 6. Dispatch realistic synthetic event chain
       try {
-        element.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, composed: true, data: strValue, inputType: 'insertText' }));
-        element.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, data: strValue, inputType: 'insertText' }));
+        element.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', code: 'KeyA', bubbles: true, composed: true }));
+        element.dispatchEvent(new InputEvent('beforeinput', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+          data: strValue,
+          inputType: 'insertText'
+        }));
+        element.dispatchEvent(new InputEvent('input', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+          data: strValue,
+          inputType: 'insertText'
+        }));
       } catch (e) {}
 
       element.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      element.dispatchEvent(new KeyboardEvent('keyup', { key: 'a', code: 'KeyA', bubbles: true, composed: true }));
       element.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       element.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
 

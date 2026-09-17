@@ -11,7 +11,7 @@
   let widgetHost = null;
   let isExtensionEnabled = true;
 
-  // Pulse animation style injected to page for filled fields
+  // Pulse animation style and Google Forms anti-overlap rules
   const pulseStyle = document.createElement('style');
   pulseStyle.textContent = `
     .af-field-success-pulse {
@@ -19,6 +19,20 @@
       outline-offset: 1px !important;
       background-color: rgba(16, 185, 129, 0.08) !important;
       transition: all 0.3s ease-in-out !important;
+    }
+    /* Google Forms anti-overlap & floating label fix */
+    .rFrNMe.CDELRd .AxOyFc,
+    .rFrNMe.CDELRd .snByac,
+    .rFrNMe.CDELRd [jsname="V67aGc"],
+    .rFrNMe.CDELRd .nd91id,
+    .rFrNMe.CDELRd .MocG8c,
+    .rFrNMe.CDELRd .Y2Zrqe,
+    .Xb9hP:has(input:not([value=""])) .snByac,
+    .Xb9hP:has(input:not([value=""])) [jsname="V67aGc"],
+    .Xb9hP:has(textarea:not(:empty)) .snByac {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
     }
   `;
   document.head.appendChild(pulseStyle);
@@ -149,6 +163,27 @@
         }, 2200);
       }
     }
+
+    // Post-fill sweep to guarantee all Google Forms placeholders and required errors stay cleared
+    const cleanupGoogleForms = () => {
+      document.querySelectorAll('.rFrNMe, .Qr7Oae, .geS5n, [jsmodel]').forEach(container => {
+        const hasValueInput = container.querySelector('input:not([type="hidden"]):not([value=""]), textarea:not(:empty)');
+        if (hasValueInput && hasValueInput.value) {
+          container.classList.add('CDELRd', 'k310eb', 'F2Pmsd');
+          container.classList.remove('k3FDgb', 'N0Fdjd');
+          container.querySelectorAll('[jsname="V67aGc"], .AxOyFc, .snByac, .nd91id, .MocG8c, .Y2Zrqe').forEach(pl => {
+            pl.style.setProperty('display', 'none', 'important');
+            pl.style.setProperty('opacity', '0', 'important');
+            pl.style.setProperty('visibility', 'hidden', 'important');
+          });
+          container.querySelectorAll('.mIZA4c, .RHiN0e, .gubaFf').forEach(err => {
+            err.style.setProperty('display', 'none', 'important');
+          });
+        }
+      });
+    };
+    cleanupGoogleForms();
+    setTimeout(cleanupGoogleForms, 120);
 
     // Record stats
     chrome.storage.sync.get(['stats'], (res) => {
